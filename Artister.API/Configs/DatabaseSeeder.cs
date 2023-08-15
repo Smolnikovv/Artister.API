@@ -49,15 +49,21 @@ namespace Artister.API.Configs
         {
             if(_context.Genres.Any())
             {
-
+                var genres = SeedGenre();
+                _context.Genres.AddRange(genres);
+                _context.SaveChanges();
             }
             if(_context.Subgenres.Any())
             {
-
+                var subgenres = SeedSubgenre();
+                _context.Subgenres.AddRange(subgenres);
+                _context.SaveChanges();
             }
             if(_context.Artists.Any())
             {
-
+                var artist = SeedArtist();
+                _context.Artists.AddRange(artist);
+                _context.SaveChanges();
             }
         }
         private List<Artist> SeedArtist()
