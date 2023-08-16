@@ -53,7 +53,16 @@ namespace Artister.API.Configs
         private void NotificationsModelConfigure(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Notification>()
-                .HasNoKey();
+                .Property(x => x.Id)
+                .IsRequired();
+
+            modelBuilder.Entity<Notification>()
+                .Property(x => x.UserId)
+                .IsRequired();
+
+            modelBuilder.Entity<Notification>()
+                .Property(x => x.Message)
+                .IsRequired();
         }
         private void UserModelConfigure(ModelBuilder modelBuilder)
         {
