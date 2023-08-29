@@ -58,7 +58,7 @@ namespace Artister.API.Controllers
 
             var id = _subgenreService.Create(dto);
 
-            return Created($"id: {id}", null);
+            return Created($"Created id {id}", null);
         }
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateSubgenreDto dto, [FromRoute]int id)

@@ -45,9 +45,9 @@ namespace Artister.API.Controllers
         {
             if(!ModelState.IsValid) return BadRequest();
 
-            var result = _genreService.Create(dto);
+            var id = _genreService.Create(dto);
 
-            return Created($"Created id {result}", null);
+            return Created($"Created id {id}", null);
         }
         [HttpDelete("{id}")]
         public ActionResult Delete([FromRoute]int id)

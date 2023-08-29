@@ -37,7 +37,7 @@ namespace Artister.API.Controllers
 
             var id = _notificationService.Create(dto);
 
-            return Created($"Created id: {id}", null);
+            return Created($"Created id {id}", null);
         }
         [HttpPut("{id}")]
         public ActionResult Update([FromBody] UpdateNotificationDto dto, [FromRoute] int id)
