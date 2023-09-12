@@ -8,7 +8,7 @@ namespace Artister.API.Controllers
     public class ArtistController : Controller
     {
         private readonly IArtistService _artistService;
-        public ArtistController(ArtistService artistService)
+        public ArtistController(IArtistService artistService)
         {
             _artistService = artistService;
         }
@@ -67,7 +67,7 @@ namespace Artister.API.Controllers
             return Ok(artist);
         }
         [HttpPost]
-        public ActionResult Create([FromRoute]CreatArtistDto dto)
+        public ActionResult Create([FromBody]CreatArtistDto dto)
         {
             if (!ModelState.IsValid) return BadRequest();
 

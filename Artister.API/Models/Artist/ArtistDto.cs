@@ -11,6 +11,5 @@ namespace Artister.API.Models.Artist
         public string? PageUrl { get; set; }
         public bool IsAccepted { get; set; }
         public int UserAddedId { get; set; }
-        public  List<SubgenreDto> Subgenre { get; set; }
     }
 }

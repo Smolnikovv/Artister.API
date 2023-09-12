@@ -10,6 +10,5 @@
         public bool IsAccepted { get; set; }
         public int UserAddedId { get; set; }
         public virtual User User { get; set; }
-        public virtual List<Subgenre> Subgenre { get; set; }
     }
 }

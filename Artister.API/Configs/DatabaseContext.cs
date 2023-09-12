@@ -11,6 +11,7 @@ namespace Artister.API.Configs
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<Subgenre> Subgenres { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<ArtistSubgenres> ArtistsSubgenres { get; set; }    
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -19,6 +20,7 @@ namespace Artister.API.Configs
             NotificationsModelConfigure(modelBuilder);
             SubgenreModelConfigure(modelBuilder);
             UserModelConfigure(modelBuilder);
+            ArtistSubgenres(modelBuilder);
         }
         private void ArtistModelConfigure(ModelBuilder modelBuilder)
         {
@@ -77,6 +79,11 @@ namespace Artister.API.Configs
             modelBuilder.Entity<User>()
                 .Property(x => x.Name)
                 .IsRequired();
+        }
+        private void ArtistSubgenres(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<ArtistSubgenres>()
+                .HasNoKey();
         }
     }
 }

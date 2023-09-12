@@ -13,7 +13,7 @@ namespace Artister.API.Configs
         public void Seed()
         {
             CheckConnection();
-            SeedDatabase();
+            //SeedDatabase();
         }
         private void UpdateDatabase()
         {

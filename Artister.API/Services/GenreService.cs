@@ -1,10 +1,11 @@
 ﻿using Artister.API.Configs;
+using Artister.API.Entities;
 using Artister.API.Models.Genre;
 using AutoMapper;
 
 namespace Artister.API.Services
 {
-    interface IGenreService
+    public interface IGenreService
     {
         List<GenreDto> GetAll();
         GenreDto GetById(int id);
@@ -58,7 +59,7 @@ namespace Artister.API.Services
         }
         public int Create(CreateGenreDto dto)
         {
-            var genre = _mapper.Map<GenreDto>(dto);
+            var genre = _mapper.Map<Genre>(dto);
             _context.Add(genre);
             _context.SaveChanges();
             return genre.Id;

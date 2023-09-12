@@ -8,7 +8,7 @@ namespace Artister.API.Controllers
     public class NotificationController : ControllerBase
     {
         private readonly INotificationService _notificationService;
-        public NotificationController(NotificationService notificationService)
+        public NotificationController(INotificationService notificationService)
         {
             _notificationService = notificationService;
         }

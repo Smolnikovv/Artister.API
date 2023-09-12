@@ -64,27 +64,28 @@ namespace Artister.API.Services
         }
         public List<ArtistDto> GetBySubgenre(int id)
         {
-            var artists = _context
-                .Artists
-                .ToList();
+            //var artists = _context
+            //    .Artists
+            //    .ToList();
 
-            if (artists != null) throw new Exception("Not found");
+            //if (artists != null) throw new Exception("Not found");
 
-            var artistsResult = new List<Artist>();
-            foreach(var a in artists)
-            {
-                var genre = a.Subgenre.ToList();
-                foreach(var g in genre)
-                {
-                    if(g.Id == id)
-                    {
-                        artistsResult.Add(a);
-                        break;
-                    }
-                }
-            }
+            //var artistsResult = new List<Artist>();
+            //foreach(var a in artists)
+            //{
+            //    var genre = a.Subgenre.ToList();
+            //    foreach(var g in genre)
+            //    {
+            //        if(g.Id == id)
+            //        {
+            //            artistsResult.Add(a);
+            //            break;
+            //        }
+            //    }
+            //}
 
-            return _mapper.Map<List<ArtistDto>>(artistsResult);
+            //return _mapper.Map<List<ArtistDto>>(artistsResult);
+            throw new NotImplementedException();
         }
         public ArtistDto GetById(int id)
         {
@@ -110,7 +111,7 @@ namespace Artister.API.Services
         }
         public int Create(CreatArtistDto dto)
         {
-            var artist = _mapper.Map<ArtistDto>(dto);
+            var artist = _mapper.Map<Artist>(dto);
             _context.Add(dto);
             _context.SaveChanges();
             return artist.Id;
@@ -144,58 +145,60 @@ namespace Artister.API.Services
         }
         public void AddSubgenreToArtist(int artistId,int subgenreId)
         {
-            var artists = _context
-                .Artists
-                .Where(x => x.Id == artistId)
-                .FirstOrDefault();
+            //var artists = _context
+            //    .Artists
+            //    .Where(x => x.Id == artistId)
+            //    .FirstOrDefault();
 
-            if (artists != null) throw new Exception("Not found");
+            //if (artists != null) throw new Exception("Not found");
 
-            var subgenres = artists
-                .Subgenre
-                .Where(x => x.Id == subgenreId)
-                .ToList();
+            //var subgenres = artists
+            //    .Subgenre
+            //    .Where(x => x.Id == subgenreId)
+            //    .ToList();
 
-            if(subgenres is null)
-            {
-                var subgenre = _context
-                    .Subgenres
-                    .Where(x => x.Id == subgenreId)
-                    .FirstOrDefault();
+            //if(subgenres is null)
+            //{
+            //    var subgenre = _context
+            //        .Subgenres
+            //        .Where(x => x.Id == subgenreId)
+            //        .FirstOrDefault();
 
-                if (subgenre != null) throw new Exception("Not found");
+            //    if (subgenre != null) throw new Exception("Not found");
 
-                artists.Subgenre.Add(subgenre);
-                _context.SaveChanges();
-            }
-            
+            //    artists.Subgenre.Add(subgenre);
+            //    _context.SaveChanges();
+            //}
+            throw new NotImplementedException();
+
         }
         public void DeleteSubgenreFromArtist(int artistId, int subgenreId)
         {
-            var artists = _context
-                .Artists
-                .Where(x => x.Id == artistId)
-                .FirstOrDefault();
+            //var artists = _context
+            //    .Artists
+            //    .Where(x => x.Id == artistId)
+            //    .FirstOrDefault();
 
-            if (artists != null) throw new Exception("Not found");
+            //if (artists != null) throw new Exception("Not found");
 
-            var subgenres = artists
-                .Subgenre
-                .Where(x => x.Id == subgenreId)
-                .ToList();
+            //var subgenres = artists
+            //    .Subgenre
+            //    .Where(x => x.Id == subgenreId)
+            //    .ToList();
 
-            if (!(subgenres is null))
-            {
-                var subgenre = _context
-                    .Subgenres
-                    .Where(x => x.Id == subgenreId)
-                    .FirstOrDefault();
+            //if (!(subgenres is null))
+            //{
+            //    var subgenre = _context
+            //        .Subgenres
+            //        .Where(x => x.Id == subgenreId)
+            //        .FirstOrDefault();
 
-                if (subgenre != null) throw new Exception("Not found");
+            //    if (subgenre != null) throw new Exception("Not found");
 
-                artists.Subgenre.Remove(subgenre);
-                _context.SaveChanges();
-            }
+            //    artists.Subgenre.Remove(subgenre);
+            //    _context.SaveChanges();
+            //}
+            throw new NotImplementedException();
         }
     }
 }

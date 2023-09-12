@@ -8,7 +8,7 @@ namespace Artister.API.Controllers
     public class SubgenreController : Controller
     {
         private readonly ISubgenreService _subgenreService;
-        public SubgenreController(SubgenreService subgenreService)
+        public SubgenreController(ISubgenreService subgenreService)
         {
             _subgenreService = subgenreService;
         }

@@ -31,7 +31,7 @@ namespace Artister.API.Services
                 .Subgenres
                 .ToList();
 
-            if (subgenres != null) throw new Exception("not found");
+            if (subgenres == null) throw new Exception("not found");
 
             return _mapper.Map<List<SubgenreDto>>(subgenres);
         }
@@ -42,7 +42,7 @@ namespace Artister.API.Services
                 .Where(x => x.GenreId == id)
                 .ToList();
 
-            if (subgenres != null) throw new Exception("not found");
+            if (subgenres == null) throw new Exception("not found");
 
             return _mapper.Map<List<SubgenreDto>>(subgenres);
         }
@@ -64,7 +64,7 @@ namespace Artister.API.Services
                 .Where(x => x.Name == name)
                 .FirstOrDefault();
 
-            if (subgere != null) throw new Exception("not found");
+            if (subgere == null) throw new Exception("not found");
 
             return _mapper.Map<SubgenreDto>(subgere);
         }
@@ -82,7 +82,7 @@ namespace Artister.API.Services
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
 
-            if (subgere != null) throw new Exception("not found");
+            if (subgere == null) throw new Exception("not found");
 
             _context.Remove(subgere);
             _context.SaveChanges();
@@ -94,7 +94,7 @@ namespace Artister.API.Services
                 .Where(x => x.Id == id)
                 .FirstOrDefault();
 
-            if (subgere != null) throw new Exception("not found");
+            if (subgere == null) throw new Exception("not found");
 
             subgere.GenreId = dto.GenreId ?? subgere.GenreId;
             subgere.Name = dto.Name ?? dto.Name;

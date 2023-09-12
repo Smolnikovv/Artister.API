@@ -9,7 +9,7 @@ namespace Artister.API.Controllers
     public class GenreController : ControllerBase
     {
         private readonly IGenreService _genreService;
-        public GenreController(GenreService genreService)
+        public GenreController(IGenreService genreService)
         {
             _genreService = genreService;
         }
