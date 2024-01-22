@@ -14,49 +14,49 @@ namespace Artister.API.Controllers
             _genreService = genreService;
         }
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var result = _genreService.GetAll();
+            var result = await _genreService.GetAll();
 
             if (result is null) return BadRequest();
 
             return Ok(result);
         }
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute]int id)
+        public async Task<ActionResult> GetById([FromRoute]int id)
         {
-            var result = _genreService.GetById(id);
+            var result = await _genreService.GetById(id);
 
             if (result is null) return BadRequest();
 
             return Ok(result);
         }
         [HttpGet("name/{name}")]
-        public ActionResult GetByName([FromRoute]string name)
+        public async Task<ActionResult> GetByName([FromRoute]string name)
         {
-            var result = _genreService.GetByName(name);
+            var result = await _genreService.GetByName(name);
 
             if (result is null) return BadRequest();
 
             return Ok(result);
         }
         [HttpPost]
-        public ActionResult Create([FromBody]CreateGenreDto dto)
+        public async Task<ActionResult> Create([FromBody]CreateGenreDto dto)
         {
             if(!ModelState.IsValid) return BadRequest();
 
-            var id = _genreService.Create(dto);
+            var id = await _genreService.Create(dto);
 
             return Created($"Created id {id}", null);
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]int id)
+        public async Task<ActionResult> Delete([FromRoute]int id)
         {
             _genreService.Delete(id);
             return NoContent();
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody]UpdateGenreDto dto, [FromRoute] int id)
+        public async Task<ActionResult> Update([FromBody]UpdateGenreDto dto, [FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest();
             _genreService.Update(dto,id);

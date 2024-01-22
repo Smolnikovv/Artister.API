@@ -3,16 +3,17 @@ using Artister.API.Entities;
 using Artister.API.Models.Genre;
 using Artister.API.Models.Subgenre;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Artister.API.Services
 {
     public interface ISubgenreService
     {
-        List<SubgenreDto> GetAll();
-        List<SubgenreDto> GetByGenreId(int id);
-        SubgenreDto GetById(int id);
-        SubgenreDto GetByName(string name);
-        int Create(CreateSubgenreDto dto);
+        Task<List<SubgenreDto>> GetAll();
+        Task<List<SubgenreDto>> GetByGenreId(int id);
+        Task<SubgenreDto> GetById(int id);
+        Task<SubgenreDto> GetByName(string name);
+        Task<int> Create(CreateSubgenreDto dto);
         void Update(UpdateSubgenreDto dto, int id);
         void Delete(int id);
     }
@@ -25,80 +26,80 @@ namespace Artister.API.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<SubgenreDto> GetAll()
+        public async Task<List<SubgenreDto>> GetAll()
         {
-            var subgenres = _context
+            var subgenres = await _context
                 .Subgenres
-                .ToList();
+                .ToListAsync();
 
             if (subgenres == null) throw new Exception("not found");
 
             return _mapper.Map<List<SubgenreDto>>(subgenres);
         }
-        public List<SubgenreDto> GetByGenreId(int id)
+        public async Task<List<SubgenreDto>> GetByGenreId(int id)
         {
-            var subgenres = _context
+            var subgenres = await _context
                 .Subgenres
                 .Where(x => x.GenreId == id)
-                .ToList();
+                .ToListAsync();
 
             if (subgenres == null) throw new Exception("not found");
 
             return _mapper.Map<List<SubgenreDto>>(subgenres);
         }
-        public SubgenreDto GetById(int id)
+        public async Task<SubgenreDto> GetById(int id)
         {
-            var subgere = _context
+            var subgere = await _context
                 .Subgenres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (subgere != null) throw new Exception("not found");
 
             return _mapper.Map<SubgenreDto>(subgere);
         }
-        public SubgenreDto GetByName(string name)
+        public async Task<SubgenreDto> GetByName(string name)
         {
-            var subgere = _context
+            var subgere = await _context
                 .Subgenres
                 .Where(x => x.Name == name)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (subgere == null) throw new Exception("not found");
 
             return _mapper.Map<SubgenreDto>(subgere);
         }
-        public int Create(CreateSubgenreDto dto)
+        public async Task<int> Create(CreateSubgenreDto dto)
         {
             var subgenre = _mapper.Map<Subgenre>(dto);
-            _context.Add(subgenre);
-            _context.SaveChanges();
+            await _context.AddAsync(subgenre);
+            await _context.SaveChangesAsync();
             return subgenre.Id;
         }
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var subgere = _context
+            var subgere = await _context
                 .Subgenres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (subgere == null) throw new Exception("not found");
 
             _context.Remove(subgere);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Update(UpdateSubgenreDto dto,int id)
+        public async void Update(UpdateSubgenreDto dto,int id)
         {
-            var subgere = _context
+            var subgere = await _context
                 .Subgenres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (subgere == null) throw new Exception("not found");
 
             subgere.GenreId = dto.GenreId ?? subgere.GenreId;
-            subgere.Name = dto.Name ?? dto.Name;
-            _context.SaveChanges();
+            subgere.Name = dto.Name ?? subgere.Name;
+            await _context.SaveChangesAsync();
         }
     }
 }

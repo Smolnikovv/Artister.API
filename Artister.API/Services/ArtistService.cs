@@ -2,6 +2,7 @@
 using Artister.API.Entities;
 using Artister.API.Models.Artist;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using System.Runtime.InteropServices;
 using System.Xml;
 
@@ -9,13 +10,13 @@ namespace Artister.API.Services
 {
     public interface IArtistService
     {
-        List<ArtistDto> GetAll();
-        List<ArtistDto> GetByYear(int year);
-        List<ArtistDto> GetBySubgenre(int id);
-        List<ArtistDto> GetUnacepted();
-        ArtistDto GetById(int id);
-        ArtistDto GetByName(string name);
-        int Create(CreatArtistDto dto);
+        Task<List<ArtistDto>> GetAll();
+        Task<List<ArtistDto>> GetByYear(int year);
+        Task<List<ArtistDto>> GetBySubgenre(int id);
+        Task<List<ArtistDto>> GetUnacepted();
+        Task<ArtistDto> GetById(int id);
+        Task<ArtistDto> GetByName(string name);
+        Task<int> Create(CreatArtistDto dto);
         void Update(UpdateArtistDto dto,int id);
         void Delete(int id);
         void AddSubgenreToArtist(int artistId, int subgenreId);
@@ -30,39 +31,39 @@ namespace Artister.API.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<ArtistDto> GetAll()
+        public async Task<List<ArtistDto>> GetAll()
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
-                .ToList();
+                .ToListAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             return _mapper.Map<List<ArtistDto>>(artists);
         }
-        public List<ArtistDto> GetByYear(int year)
+        public async Task<List<ArtistDto>> GetByYear(int year)
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.YearOfOrigin == year)
-                .ToList();
+                .ToListAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             return _mapper.Map<List<ArtistDto>>(artists);
         }
-        public List<ArtistDto> GetUnacepted()
+        public async Task<List<ArtistDto>> GetUnacepted()
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.IsAccepted == false)
-                .ToList();
+                .ToListAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             return _mapper.Map<List<ArtistDto>>(artists);
         }
-        public List<ArtistDto> GetBySubgenre(int id)
+        public async Task<List<ArtistDto>> GetBySubgenre(int id)
         {
             //var artists = _context
             //    .Artists
@@ -87,53 +88,53 @@ namespace Artister.API.Services
             //return _mapper.Map<List<ArtistDto>>(artistsResult);
             throw new NotImplementedException();
         }
-        public ArtistDto GetById(int id)
+        public async Task<ArtistDto> GetById(int id)
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             return _mapper.Map<ArtistDto>(artists);
         }
-        public ArtistDto GetByName(string name)
+        public async Task<ArtistDto> GetByName(string name)
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.Name == name)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             return _mapper.Map<ArtistDto>(artists);
         }
-        public int Create(CreatArtistDto dto)
+        public async Task<int> Create(CreatArtistDto dto)
         {
             var artist = _mapper.Map<Artist>(dto);
-            _context.Add(dto);
-            _context.SaveChanges();
+            await _context.AddAsync(dto);
+            await _context.SaveChangesAsync();
             return artist.Id;
         }
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (artists != null) throw new Exception("Not found");
 
             _context.Remove(artists);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Update(UpdateArtistDto dto, int id)
+        public async void Update(UpdateArtistDto dto, int id)
         {
-            var artists = _context
+            var artists = await _context
                 .Artists
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (artists != null) throw new Exception("Not found");
 
@@ -142,6 +143,7 @@ namespace Artister.API.Services
             artists.WikiUrl = dto.WikiUrl ?? artists.WikiUrl;
             artists.PageUrl = dto.PageUrl ?? artists.PageUrl;
             artists.IsAccepted = dto.IsAccepted ?? artists.IsAccepted;
+            await _context.SaveChangesAsync();
         }
         public void AddSubgenreToArtist(int artistId,int subgenreId)
         {

@@ -13,55 +13,55 @@ namespace Artister.API.Controllers
             _subgenreService = subgenreService;
         }
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var result = _subgenreService.GetAll();
+            var result = await _subgenreService.GetAll();
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute] int id)
+        public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var result = _subgenreService.GetById(id);
+            var result = await _subgenreService.GetById(id);
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpGet("genre/{id}")]
-        public ActionResult GetBySubgenre([FromRoute] int id)
+        public async Task<ActionResult> GetBySubgenre([FromRoute] int id)
         {
-            var result = _subgenreService.GetByGenreId(id);
+            var result = await _subgenreService.GetByGenreId(id);
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpGet("name/{name}")]
-        public ActionResult GetByName([FromRoute] string name)
+        public async Task<ActionResult> GetByName([FromRoute] string name)
         {
-            var result = _subgenreService.GetByName(name);
+            var result = await _subgenreService.GetByName(name);
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpPost]
-        public ActionResult Create([FromBody] CreateSubgenreDto dto)
+        public async Task<ActionResult> Create([FromBody] CreateSubgenreDto dto)
         {
             if(!ModelState.IsValid)
             {
                 return BadRequest();
             }
 
-            var id = _subgenreService.Create(dto);
+            var id = await _subgenreService.Create(dto);
 
             return Created($"Created id {id}", null);
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] UpdateSubgenreDto dto, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody] UpdateSubgenreDto dto, [FromRoute]int id)
         {
             if(!ModelState.IsValid)
             {
@@ -73,7 +73,7 @@ namespace Artister.API.Controllers
             return Ok();
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]int id)
+        public async Task<ActionResult> Delete([FromRoute]int id)
         {
             _subgenreService.Delete(id);
 

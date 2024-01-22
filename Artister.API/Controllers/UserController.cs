@@ -13,43 +13,43 @@ namespace Artister.API.Controllers
             _userService = userService;
         }
         [HttpGet]
-        public ActionResult GetAll()
+        public async Task<ActionResult> GetAll()
         {
-            var result = _userService.GetUsers();
+            var result = await _userService.GetUsers();
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpGet("{id}")]
-        public ActionResult GetById(int id)
+        public async Task<ActionResult> GetById(int id)
         {
-            var result = _userService.GetUserById(id);
+            var result = await _userService.GetUserById(id);
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
-        [HttpGet("name/{name}")]
-        public ActionResult GetByName(string name)
+        [HttpGet("GetByName/{name}")]
+        public async Task<ActionResult> GetByName(string name)
         {
-            var result = _userService.GetUserByName(name);
+            var result = await _userService.GetUserByName(name);
 
             if (result == null) return NotFound();
 
             return Ok(result);
         }
         [HttpPost]
-        public ActionResult Create([FromBody]CreateUserDto dto)
+        public async Task<ActionResult> Create([FromBody]CreateUserDto dto)
         {
             if(!ModelState.IsValid) return BadRequest(ModelState);
 
-            var id = _userService.Create(dto);
+            var id = await _userService.Create(dto);
 
             return Created($"Created id {id}", null);
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody]UpdateUserDto dto, [FromRoute]int id)
+        public async Task<ActionResult> Update([FromBody]UpdateUserDto dto, [FromRoute]int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
 
@@ -58,7 +58,7 @@ namespace Artister.API.Controllers
             return Ok();
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute]int id)
+        public async Task<ActionResult> Delete([FromRoute]int id)
         {
             _userService.Delete(id);
 

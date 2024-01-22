@@ -2,15 +2,16 @@
 using Artister.API.Entities;
 using Artister.API.Models.Genre;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 
 namespace Artister.API.Services
 {
     public interface IGenreService
     {
-        List<GenreDto> GetAll();
-        GenreDto GetById(int id);
-        GenreDto GetByName(string name);
-        int Create(CreateGenreDto dto);
+        Task<List<GenreDto>> GetAll();
+        Task<GenreDto> GetById(int id);
+        Task<GenreDto> GetByName(string name);
+        Task<int> Create(CreateGenreDto dto);
         void Update(UpdateGenreDto dto, int id);
         void Delete(int id);
 
@@ -25,69 +26,69 @@ namespace Artister.API.Services
             _context = context;
             _mapper = mapper;
         }
-        public List<GenreDto> GetAll()
+        public async Task<List<GenreDto>> GetAll()
         {
-            var genres = _context
+            var genres = await _context
                 .Genres
-                .ToList();
+                .ToListAsync();
 
             if (genres == null) throw new Exception("not found");
 
             return _mapper.Map<List<GenreDto>>(genres);
         }
-        public GenreDto GetById(int id)
+        public async Task<GenreDto> GetById(int id)
         {
-            var genre = _context
+            var genre = await _context
                 .Genres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (genre == null) throw new Exception("not found");
 
             return _mapper.Map<GenreDto>(genre);
         }
-        public GenreDto GetByName(string name)
+        public async Task<GenreDto> GetByName(string name)
         {
-            var genre = _context
+            var genre = await _context
                 .Genres
                 .Where(x => x.Name == name)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (genre == null) throw new Exception("not found");
 
             return _mapper.Map<GenreDto>(genre);
         }
-        public int Create(CreateGenreDto dto)
+        public async Task<int> Create(CreateGenreDto dto)
         {
             var genre = _mapper.Map<Genre>(dto);
-            _context.Add(genre);
-            _context.SaveChanges();
+            await _context.AddAsync(genre);
+            await _context.SaveChangesAsync();
             return genre.Id;
         }
-        public void Delete(int id)
+        public async void Delete(int id)
         {
-            var genre = _context
+            var genre = await _context
                 .Genres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (genre == null) throw new Exception("not found");
 
             _context.Remove(genre);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
-        public void Update(UpdateGenreDto dto, int id)
+        public async void Update(UpdateGenreDto dto, int id)
         {
-            var genre = _context
+            var genre = await _context
                 .Genres
                 .Where(x => x.Id == id)
-                .FirstOrDefault();
+                .FirstOrDefaultAsync();
 
             if (genre == null) throw new Exception("not found");
 
             genre.Name = dto.Name ?? genre.Name;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
     }

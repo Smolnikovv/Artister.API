@@ -13,34 +13,34 @@ namespace Artister.API.Controllers
             _notificationService = notificationService;
         }
         [HttpGet("{id}")]
-        public ActionResult GetById([FromRoute] int id)
+        public async Task<ActionResult> GetById([FromRoute] int id)
         {
-            var result = _notificationService.GetById(id);
+            var result = await _notificationService.GetById(id);
 
             if (result == null) return BadRequest();
 
             return Ok(result);
         }
         [HttpGet("user/{id}")]
-        public ActionResult GetByUserId([FromRoute]int id) 
+        public async Task<ActionResult> GetByUserId([FromRoute]int id) 
         {
-            var result = _notificationService.GetById(id);
+            var result = await _notificationService.GetById(id);
 
             if (result == null) return BadRequest();
 
             return Ok(result);
         }
         [HttpPost]
-        public ActionResult Create([FromBody] CreateNotificationDto dto)
+        public async Task<ActionResult> Create([FromBody] CreateNotificationDto dto)
         {
             if(!ModelState.IsValid) return BadRequest();
 
-            var id = _notificationService.Create(dto);
+            var id = await _notificationService.Create(dto);
 
             return Created($"Created id {id}", null);
         }
         [HttpPut("{id}")]
-        public ActionResult Update([FromBody] UpdateNotificationDto dto, [FromRoute] int id)
+        public async Task<ActionResult> Update([FromBody] UpdateNotificationDto dto, [FromRoute] int id)
         {
             if (!ModelState.IsValid) return BadRequest();
 
@@ -49,7 +49,7 @@ namespace Artister.API.Controllers
             return Ok();
         }
         [HttpDelete("{id}")]
-        public ActionResult Delete([FromRoute] int id)
+        public async Task<ActionResult> Delete([FromRoute] int id)
         {
             _notificationService.Delete(id);
 
