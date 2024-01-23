@@ -30,7 +30,7 @@ namespace Artister.API.Controllers
 
             return Ok(result);
         }
-        [HttpGet("genre/{id}")]
+        [HttpGet("GetBySubgenre/{id}")]
         public async Task<ActionResult> GetBySubgenre([FromRoute] int id)
         {
             var result = await _subgenreService.GetByGenreId(id);
@@ -39,7 +39,7 @@ namespace Artister.API.Controllers
 
             return Ok(result);
         }
-        [HttpGet("name/{name}")]
+        [HttpGet("GetByName/{name}")]
         public async Task<ActionResult> GetByName([FromRoute] string name)
         {
             var result = await _subgenreService.GetByName(name);

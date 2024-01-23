@@ -31,7 +31,7 @@ namespace Artister.API.Controllers
 
             return Ok(result);
         }
-        [HttpGet("name/{name}")]
+        [HttpGet("GetByName/{name}")]
         public async Task<ActionResult> GetByName([FromRoute]string name)
         {
             var result = await _genreService.GetByName(name);

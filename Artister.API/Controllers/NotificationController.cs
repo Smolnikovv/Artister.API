@@ -21,7 +21,7 @@ namespace Artister.API.Controllers
 
             return Ok(result);
         }
-        [HttpGet("user/{id}")]
+        [HttpGet("GetByUserId/{id}")]
         public async Task<ActionResult> GetByUserId([FromRoute]int id) 
         {
             var result = await _notificationService.GetById(id);
