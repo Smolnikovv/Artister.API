@@ -1,6 +1,5 @@
 ﻿using Artister.API.Configs;
 using Artister.API.Entities;
-using Artister.API.Models.Genre;
 using Artister.API.Models.Subgenre;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -21,6 +20,7 @@ namespace Artister.API.Services
     {
         private readonly DatabaseContext _context;
         private readonly IMapper _mapper;
+        int i = 10;
         public SubgenreService(DatabaseContext context, IMapper mapper)
         {
             _context = context;
@@ -88,7 +88,7 @@ namespace Artister.API.Services
             _context.Remove(subgere);
             await _context.SaveChangesAsync();
         }
-        public async void Update(UpdateSubgenreDto dto,int id)
+        public async void Update(UpdateSubgenreDto dto, int id)
         {
             var subgere = await _context
                 .Subgenres
